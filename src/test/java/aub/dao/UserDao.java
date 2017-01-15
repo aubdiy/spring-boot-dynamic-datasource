@@ -1,5 +1,6 @@
 package aub.dao;
 
+import aub.product.spring.boot.dynamic.datasource.DynamicDataSourcePolicy;
 import aub.product.spring.boot.dynamic.datasource.TargetDataSource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,11 +22,10 @@ public class UserDao {
         return this.sqlSessionTemplate.selectList("x.selectAll");
     }
 
-    @TargetDataSource(master = "reader")
+    @TargetDataSource(master = "reader", slavePolicy = DynamicDataSourcePolicy.RANDOM)
     public List<Map<String, Object>> selectSlave() {
         return this.sqlSessionTemplate.selectList("x.selectAll");
     }
-
 
 
     @Transactional
